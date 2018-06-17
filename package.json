@@ -5,7 +5,7 @@
     "test": "tests"
   },
   "scripts": {
-    "api-test": "newman run tests/CollectionWithoutFailures.json"
+    "postman-api-test": "newman run tests/CollectionWithoutFailures.json e Variable.json"
   },
   "author": "Yaroslav Kratsylo",
   "dependencies": {
