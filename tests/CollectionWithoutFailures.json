@@ -1,0 +1,218 @@
+{
+	"info": {
+		"_postman_id": "d5954e47-f988-48cc-8313-a3463abc7448",
+		"name": "TestExamplesForPresentation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get_List_Of_Students",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a62a55d1-ba99-41b7-a43a-ffced5e2b96f",
+						"type": "text/javascript",
+						"exec": [
+							"//Check the response status code",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Check that response time is less than 1000ms",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"",
+							"//Check that Content-type is set in the header",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"//Check that id attribute is not null",
+							" var jsonData = pm.response.json();",
+							" tests['id is not null'] = jsonData.id !== null;",
+							"",
+							"//Check that Content-type is JSON",
+							"tests[\"Content-Type header is set\"] = postman.getResponseHeader(\"Content-Type\") === \"application/json;charset=UTF-8\";"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{localUrl}}/student/list",
+					"host": [
+						"{{localUrl}}"
+					],
+					"path": [
+						"student",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get_Student_By_Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6752a37c-7b7e-4fdd-91fc-e642b48504ff",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"",
+							"//Check the response status code",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Check that correct json ",
+							"var studentSchema = {",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"id\": {",
+							"       \"type\": \"integer\"",
+							"    },",
+							"    \"firstName\": {",
+							"        \"type\" : \"string\"",
+							"    },",
+							"    \"lastName\": {",
+							"        \"type\": \"string\"",
+							"    },",
+							"    \"email\": {",
+							"        \"type\": \"string\"",
+							"    },",
+							"    \"programme\": {",
+							"        \"type\": \"string\"",
+							"        ",
+							"    },",
+							"    \"courses\": {",
+							"        \"type\" : \"array\",",
+							"        \"items\": [",
+							"        {",
+							"          \"type\": \"string\"",
+							"        }",
+							"        ]",
+							"    }",
+							"},",
+							"\"required\":[",
+							"    \"id\",",
+							"    \"firstName\",",
+							"    \"email\",",
+							"    ]",
+							"};",
+							"",
+							"// Test whether the response matches the schema",
+							"tests[\"Valid scehma\"] = tv4.validate(jsonData, studentSchema);",
+							"console.log(\"Validation failed: \", tv4.error);",
+							"",
+							"",
+							"//Check that correct values are pulled for student",
+							"",
+							" tests['Id attribute has correct value'] = jsonData.id === 25;",
+							" tests['First Name attribute has correct value'] = jsonData.firstName === \"Paki\";",
+							" tests['Last Name attribute has correct value'] = jsonData.lastName === \"Samson\";",
+							" tests['Email attribute has correct value'] = jsonData.email === \"ornare@Mauriseuturpis.edu\";",
+							" tests['Programme attribute has correct value'] = jsonData.programme === \"Law\";",
+							" tests['Courses attribute 1 has correct value'] = jsonData.courses[0]  === (\"Criminal Law\");",
+							" tests['Courses attribute 2 has correct value'] = jsonData.courses[1]  === (\"Constitutional Law\");",
+							" tests['Courses attribute 3 has correct value'] = jsonData.courses[2]  === (\"Property Law\");",
+							" tests['Courses attribute 4 has correct value'] = jsonData.courses[3]  === (\"Contracts\");",
+							" ",
+							"//Check that Content-type is JSON",
+							"tests[\"Content-Type header is set\"] = postman.getResponseHeader(\"Content-Type\") === \"application/json;charset=UTF-8\"; "
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{localUrl}}/student/25",
+					"host": [
+						"{{localUrl}}"
+					],
+					"path": [
+						"student",
+						"25"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User_Update_Data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9f60789f-4449-4ba2-a766-f32bae563d9e",
+						"type": "text/javascript",
+						"exec": [
+							"//Check the response status code",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": 1,\n        \"firstName\": \"Vernon_Update\",\n        \"lastName\": \"Harper_Update\",\n        \"email\": \"egestas.rhoncus.Proin@massaQuisqueporttitor.org\",\n        \"programme\": \"Financial Analysis_Update\",\n        \"courses\": [\n            \"Accounting\",\n            \"Statistics\",\n            \"TestCourse\"\n        ]\n    }"
+				},
+				"url": {
+					"raw": "{{localUrl}}/student/1",
+					"host": [
+						"{{localUrl}}"
+					],
+					"path": [
+						"student",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "f44c0243-6dd8-460d-beef-223ade8fbc19",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "a1de8573-fec9-46ff-bfe3-97fa9d018c72",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
