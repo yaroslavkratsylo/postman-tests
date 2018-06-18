@@ -2,11 +2,9 @@
 	"name": "postman-tests",
 	"version": "1.0.0",
 	"description": "Project for postman tests",
-	"directories": {
-		"test": "tests"
-	},
+
 	"scripts": {
-		"api-test": "newman run tests/CollectionWithoutFailures.json -e tests/Variable.json"
+		"api-test": "newman run CollectionWithoutFailures.json -e Variable.json --reporters cli,junit --reporter-junit-export newman.xml"
 	},
 	"author": "Yaroslav Kratsylo",
 	"dependencies": {
